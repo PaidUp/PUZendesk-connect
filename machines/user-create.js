@@ -1,5 +1,5 @@
 module.exports = {
-  friendlyName: 'user-retrieve',
+  friendlyName: 'user-create',
   description: 'Create Zendesk User',
   extendedDescription: 'Create Zendesk Use',
   cacheable: false,
@@ -24,6 +24,16 @@ module.exports = {
       example: 'test@test.com',
       description: 'user zendesk email.',
       required: true
+    },
+    fullName: {
+      example: 'John Doe',
+      description: 'User full name.',
+      required: true
+    },
+    phone: {
+      example: '+133344455555',
+      description: 'User full name.',
+      required: true
     }
 
   },
@@ -39,8 +49,8 @@ module.exports = {
     },
     error: {
       description: 'Some error with his status',
-      example:  '*'
-      
+      example: '*'
+
     }
 
   },
@@ -58,11 +68,27 @@ module.exports = {
 
 
 
-    client.search.query("email:"+inputs.email, function (err, req, result) {
+    client.search.query("email:" + inputs.email, function (err, req, result) {
       if (err) {
         return exits.error(err);
       }
-      return exits.success(result);
+      if (result.length) {
+        var cli = result[0];
+        client.users.update(cli.id, {user: {
+          name: inputs.fullName,
+          phone: inputs.phone}
+        }, function (err, req, result) {
+          if (err) {
+            return exits.error(err);
+          }
+
+          return exits.success(result);
+        });
+
+      } else {
+        
+      }
+      //return exits.success(result);
     });
 
   },
