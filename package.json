@@ -1,0 +1,38 @@
+{
+  "name": "paidup-zendesk-connect",
+  "version": "0.1.0",
+  "description": "Connector for Zendesk",
+  "scripts": {
+    "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
+  },
+  "keywords": [
+    "zendesk",
+    "connector",
+    "machines",
+    "machinepack",
+    "PaidUp"
+  ],
+  "author": "PaidUp",
+  "license": "MIT",
+  "dependencies": {
+    "machine": "^10.0.0",
+    "machinepack-http": "^2.4.0",
+    "node-zendesk": "^1.1.12",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {
+    "test-machinepack-mocha": "^2.0.0"
+  },
+  "machinepack": {
+    "friendlyName": "PaidUp-Zendesk-Connect",
+    "machineDir": "machines/",
+    "machines": [
+      "user-retrieve"
+    ],
+    "iconSrc": "https://app.getpaidup.com/favicon.ico"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PaidUp/PUZendesk-connect.git"
+  }
+}
