@@ -33,7 +33,7 @@ module.exports = {
     phone: {
       example: '+133344455555',
       description: 'User full name.',
-      required: true
+      required: false
     }
   },
   defaultExit: 'success',
