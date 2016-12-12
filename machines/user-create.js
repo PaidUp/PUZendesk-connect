@@ -56,7 +56,7 @@ module.exports = {
     var client = zendesk.createClient({
       username: inputs.username,
       token: inputs.token,
-      subdomain: 'https://' + inputs.subdomain + '.zendesk.com/api/v2',
+      remoteUri: 'https://' + inputs.subdomain + '.zendesk.com/api/v2',
       oauth: false
     });
 
