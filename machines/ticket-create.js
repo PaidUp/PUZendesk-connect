@@ -22,7 +22,12 @@ module.exports = {
     },
     requesterEmail: {
       example: 'test@test.com',
-      description: 'reuester zendesk email.',
+      description: 'requester zendesk email.',
+      required: true
+    },
+    requesterName: {
+      example: 'John Doe',
+      description: 'requester zendesk name.',
       required: true
     },
     assigneeEmail: {
@@ -70,43 +75,81 @@ module.exports = {
       oauth: false
     });
 
-
-
-    client.search.query("email:" + inputs.assigneeEmail, function (err, req, result) {
+    client.search.query("email:" + inputs.requesterEmail, function (err, req, result) {
       if (err) {
         return exits.error(err);
       }
-
-
-      if (result.length) {
-        var assignee = result[0];
-
-        var ticket = {
-          ticket: {
-            requester: {
-              email: inputs.requesterEmail
-            },
-            assignee_id: assignee.id,
-            subject: inputs.organization + ' Payment Failed for ' + inputs.subject,
-            organization: inputs.organization,
-            comment: {
-              body: inputs.comment
-            },
-            status: 'pending',
-            tags: ['ticket_category_payment_failed_new_card']
-          }
-        }
-
-        client.tickets.create(ticket, 
-         function (err, req, result) {
+      if (!result.length) {
+        client.users.create({
+          user: {
+            name: inputs.requesterName,
+            email: inputs.requesterEmail,
+            verified: true,
+            tags: ['notpaidupcustomer'],
+            user_fields: {
+              paidup_customer: 'notpaidupcustomer',
+              payment_url: 'https://app.getpaidup.com'
+            }
+          },
+        }, function (err, req, result) {
           if (err) {
             return exits.error(err);
           }
-          return exits.success(result);
+          createTicket(client, inputs, function (error, data) {
+            if (err) {
+              return exits.error(err);
+            }
+            return exits.success(data)
+          });
         });
-      } else {
-        return exits.error({error: "assignee email isn't valid"});
       }
-    });
+      else {
+        createTicket(client, inputs, function (error, data) {
+          if (err) {
+            return exits.error(err);
+          }
+          return exits.success(data)
+        });
+      }
+    })
+
+    function createTicket(client, inputs, cb) {
+      client.search.query("email:" + inputs.assigneeEmail, function (err, req, result) {
+        if (err) {
+          return cb(err);
+        }
+
+        if (result.length) {
+          var assignee = result[0];
+
+          var ticket = {
+            ticket: {
+              requester: {
+                email: inputs.requesterEmail
+              },
+              assignee_id: assignee.id,
+              subject: inputs.organization + ' Payment Failed for ' + inputs.subject,
+              organization: inputs.organization,
+              comment: {
+                body: inputs.comment
+              },
+              status: 'pending',
+              tags: ['ticket_category_payment_failed_new_card']
+            }
+          }
+
+          client.tickets.create(ticket,
+            function (err, req, result) {
+              if (err) {
+                return cb(err);
+              }
+              return cb(null, result);
+            });
+        } else {
+          return cb({ error: "assignee email isn't valid" });
+        }
+      });
+    }
+
   },
 };
