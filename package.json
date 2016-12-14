@@ -27,7 +27,8 @@
     "friendlyName": "PaidUp-Zendesk-Connect",
     "machineDir": "machines/",
     "machines": [
-      "user-create"
+      "user-create",
+      "ticket-create"
     ],
     "iconSrc": "https://app.getpaidup.com/favicon.ico"
   },
