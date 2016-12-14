@@ -1,6 +1,6 @@
 {
   "name": "paidup-zendesk-connect",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Connector for Zendesk",
   "scripts": {
     "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
