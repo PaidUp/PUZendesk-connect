@@ -85,7 +85,6 @@ module.exports = {
             name: inputs.requesterName,
             email: inputs.requesterEmail,
             verified: true,
-            tags: ['notpaidupcustomer'],
             user_fields: {
               paidup_customer: 'notpaidupcustomer',
               payment_url: 'https://app.getpaidup.com'
