@@ -86,7 +86,6 @@ module.exports = {
             email: inputs.requesterEmail,
             verified: true,
             user_fields: {
-              paidup_customer: 'notpaidupcustomer',
               payment_url: 'https://app.getpaidup.com'
             }
           },
