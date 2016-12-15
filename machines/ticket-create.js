@@ -40,14 +40,19 @@ module.exports = {
       description: 'ticket subject.',
       required: true
     },
-    organization: {
-      example: 'organization name',
-      description: 'organization mail.',
-      required: true
-    },
     comment: {
       example: 'some comment',
       description: 'ticket comment.',
+      required: true
+    },
+    status: {
+      example: 'pending',
+      description: 'ticket status.',
+      required: true
+    },
+    tags: {
+      example: ['some comment'],
+      description: 'array ticket tags.',
       required: true
     }
   },
@@ -126,13 +131,12 @@ module.exports = {
                 email: inputs.requesterEmail
               },
               assignee_id: assignee.id,
-              subject: inputs.organization + ' Payment Failed for ' + inputs.subject,
-              organization: inputs.organization,
+              subject: inputs.subject,
               comment: {
                 body: inputs.comment
               },
-              status: 'pending',
-              tags: ['ticket_category_payment_failed_new_card']
+              status: inputs.status,
+              tags: inputs.tags
             }
           }
 
