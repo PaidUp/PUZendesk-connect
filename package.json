@@ -30,7 +30,8 @@
       "user-create",
       "ticket-create",
       "ticket-retrieve-by-user",
-      "ticket-add-comment"
+      "ticket-add-comment",
+      "user-update"
     ],
     "iconSrc": "https://app.getpaidup.com/favicon.ico"
   },
