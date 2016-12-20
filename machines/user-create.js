@@ -34,7 +34,12 @@ module.exports = {
       example: '+133344455555',
       description: 'User full name.',
       required: false
-    }
+    },
+    userType: {
+      example: 'user_type_paidup_customer',
+      description: 'Type user.',
+      required: true
+    },
   },
   defaultExit: 'success',
   exits: {
@@ -70,7 +75,10 @@ module.exports = {
           user: {
             name: inputs.fullName,
             phone: inputs.phone,
-            user_fields: { payment_url: "https://app.getpaidup.com" }
+            user_fields: {
+              payment_url: "https://app.getpaidup.com",
+              user_type: inputs.userType
+            }
           }
         }, function (err, req, result) {
           if (err) {
@@ -89,7 +97,8 @@ module.exports = {
             tags: ['notpaidupcustomer'],
             user_fields: {
               paidup_customer: 'notpaidupcustomer',
-              payment_url: 'https://app.getpaidup.com'
+              payment_url: 'https://app.getpaidup.com',
+              user_type: inputs.userType
             }
           },
         }, function (err, req, result) {
