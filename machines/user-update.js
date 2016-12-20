@@ -54,6 +54,11 @@ module.exports = {
       example: '+133344455555',
       description: 'User full name.',
       required: false
+    },
+    organization: {
+      example: 'some organization',
+      description: 'organization name.',
+      required: true
     }
   },
   defaultExit: 'success',
@@ -86,25 +91,32 @@ module.exports = {
       }
       if (result.length) {
         var cli = result[0];
-        client.users.update(cli.id, {
-          user: {
-            tags: inputs.tags,
-            phone: inputs.phone,
-            user_fields: { 
-              payment_url: "https://app.getpaidup.com",
-              paidup_customer: inputs.paidupcustomer,
-              athlete_name: inputs.beneficiary,
-              products: inputs.products,
-              user_type: inputs.userType
-           }
-          }
-        }, function (err, req, result) {
+
+        client.search.query("name:" + inputs.organization, function (err, req, organizations) {
           if (err) {
             return exits.error(err);
           }
-
-          return exits.success(result);
-        });
+          var organization = organizations[0]
+          client.users.update(cli.id, {
+            user: {
+              tags: inputs.tags,
+              phone: inputs.phone,
+              organization_id: organization ? organization.id : undefined,
+              user_fields: {
+                payment_url: "https://app.getpaidup.com",
+                paidup_customer: inputs.paidupcustomer,
+                athlete_name: inputs.beneficiary,
+                products: inputs.products,
+                user_type: inputs.userType
+              }
+            }
+          }, function (err, req, result) {
+            if (err) {
+              return exits.error(err);
+            }
+            return exits.success(result);
+          });
+        })
       } else {
         client.users.create({
           user: {
