@@ -76,7 +76,6 @@ module.exports = {
             name: inputs.fullName,
             phone: inputs.phone,
             user_fields: {
-              payment_url: "https://app.getpaidup.com",
               user_type: inputs.userType
             }
           }
