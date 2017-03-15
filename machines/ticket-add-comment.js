@@ -30,6 +30,11 @@ module.exports = {
       description: 'zendesk ticket comment.',
       required: true
     },
+    status: {
+      example: 'open',
+      description: 'can be open, pending, hold, solved or closed.',
+      required: true
+    },
     tags: {
       example: ['some_tag'],
       description: 'zendesk ticket tag.',
@@ -68,7 +73,8 @@ module.exports = {
     client.tickets.update(inputs.ticketId, {
       "ticket": {
         "comment": { "body": inputs.comment, "public": inputs.isPublic },
-        "tags": inputs.tags
+        "tags": inputs.tags,
+        "status" : inputs.status
       }
     }, function (err, req, result) {
       if (err) {
