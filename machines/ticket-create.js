@@ -91,7 +91,6 @@ module.exports = {
             email: inputs.requesterEmail,
             verified: true,
             user_fields: {
-              payment_url: 'https://app.getpaidup.com'
             }
           },
         }, function (err, req, result) {
