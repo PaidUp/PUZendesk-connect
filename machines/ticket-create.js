@@ -54,6 +54,11 @@ module.exports = {
       example: ['some comment'],
       description: 'array ticket tags.',
       required: true
+    },
+    custom_fields: {
+      example: [],//{id: 111, value: "xxx" }
+      description: 'array custom fields.',
+      required: true
     }
   },
   defaultExit: 'success',
