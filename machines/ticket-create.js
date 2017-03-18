@@ -55,7 +55,7 @@ module.exports = {
       description: 'array ticket tags.',
       required: true
     },
-    custom_fields: {
+    customFields: {
       example: [],//{id: 111, value: "xxx" }
       description: 'array custom fields.',
       required: true
@@ -141,7 +141,8 @@ module.exports = {
                 body: inputs.comment
               },
               status: inputs.status,
-              tags: inputs.tags
+              tags: inputs.tags,
+              custom_fields: inputs.customFields
             }
           }
 
