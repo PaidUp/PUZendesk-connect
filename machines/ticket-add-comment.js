@@ -70,10 +70,10 @@ module.exports = {
       oauth: false
     });
 
-    client.tickets.update(inputs.ticketId, {
+    client.tickets.updateMany(inputs.ticketId, {
       "ticket": {
         "comment": { "body": inputs.comment, "public": inputs.isPublic },
-        "tags": inputs.tags,
+        "additional_tags": inputs.tags,
         "status" : inputs.status
       }
     }, function (err, req, result) {
