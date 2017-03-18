@@ -36,7 +36,7 @@ module.exports = {
       required: true
     },
     tags: {
-      example: ['some_tag'],
+      example: 'some_tag1, some_tag2',
       description: 'zendesk ticket tag.',
       required: true
     },
