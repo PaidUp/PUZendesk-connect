@@ -59,6 +59,11 @@ module.exports = {
       example: [],//{id: 111, value: "xxx" }
       description: 'array custom fields.',
       required: true
+    },
+    removeTags: {
+      example: [],//{id: 111, value: "xxx" }
+      description: 'array tags for remove.',
+      required: true
     }
   },
   defaultExit: 'success',
@@ -151,7 +156,18 @@ module.exports = {
               if (err) {
                 return cb(err);
               }
-              return cb(null, result);
+              if (inputs.removeTags.length) {
+                client.tickets.updateMany(result.id, {
+                  "ticket": {
+                    "remove_tags": inputs.removeTags
+                  }
+                }, function (err, req, resultUpd) {
+                  if (err) {
+                    return exits.error(err);
+                  }
+                  return exits.success(resultUpd);
+                });
+              }
             });
         } else {
           return cb({ error: "assignee email isn't valid" });
